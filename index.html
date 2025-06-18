@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Base Quest: A Crise dos Números Perdidos</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Estilos internos das regiões */
+    .regiao-binaria {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0d2b2b 100%);
+    }
+    .regiao-octal {
+      background: linear-gradient(135deg, #0a0a0a 0%, #2e1a2e 50%, #3d0d3d 100%);
+    }
+    .regiao-hexadecimal {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a2e2a 50%, #0d3d2e 100%);
+    }
+    .regiao-decimal {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a2e1a 50%, #0d3d0d 100%);
+    }
+    .regiao-caos {
+      background: linear-gradient(135deg, #0a0a0a 0%, #2e1a1a 50%, #3d0d0d 100%);
+      animation: pulsateCaos 3s infinite alternate;
+    }
+    @keyframes pulsateCaos {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
+    }
+
+    /* Novos estilos para o HUD */
+    #hud {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    #hud-jogador, #hud-inimigo {
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    #hud-jogador {
+      border: 2px solid #00ffcc;
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+    }
+    #hud-inimigo {
+      border: 2px solid #ff3366;
+      box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .hud-titulo {
+      font-weight: bold;
+      color: #ffcc00;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    #vidas-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+    #inimigo-visual {
+      margin-bottom: 15px;
+    }
+    #barra-vida {
+      width: 80%;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Controle de Música -->
+  <button id="controle-musica" class="btn btn-pixel btn-pequeno" onclick="alternarMusica()">Música: ON</button>
+  
+  <!-- Áudio de Fundo -->
+  <audio id="musica-fundo" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+    Seu navegador não suporta o elemento de áudio.
+  </audio>
+  
+  <!-- Partículas de Fundo -->
+  <div class="particles" id="particles"></div>
+  
+  <div class="container">
+    <!-- Tela de Início -->
+    <section id="inicio">
+      <div id="logo-container">
+        <div class="pixel-logo">BASE QUEST</div>
+        <div class="pixel-subtitle">A Crise dos Números Perdidos</div>
+      </div>
+      
+      <div id="menu-inicial">
+        <button id="botao-iniciar" class="btn btn-pixel">NOVO JOGO</button>
+        <button id="botao-hardcore" class="btn btn-pixel">MODO HARDCORE</button>
+        <button id="botao-carregar" class="btn btn-pixel">CONTINUAR</button>
+      </div>
+      
+      <div id="dica-inicio">Pressione NOVO JOGO para começar</div>
+    </section>
+    
+    <!-- Jogo (inicialmente oculto via CSS, não via classe) -->
+    <section id="jogo">
+      <div id="texto"></div>
+      
+      <div id="entrada" class="hidden">
+        <input type="text" id="resposta" placeholder="Digite sua resposta..." autocomplete="off" />
+        <button id="botao-responder" class="btn btn-pixel btn-pequeno">Responder</button>
+      </div>
+      
+      <div id="opcoes" class="hidden"></div>
+      
+      <div id="hud" class="hidden">
+        <!-- Container do Jogador -->
+        <div id="hud-jogador">
+          <div class="hud-titulo">SUAS VIDAS</div>
+          <div id="vidas-container"></div>
+        </div>
+        
+        <!-- Container do Inimigo -->
+        <div id="hud-inimigo">
+          <div id="nome-inimigo">Inimigo: ???</div>
+          <div id="inimigo-visual"></div>
+          <div class="hud-titulo">VIDA DO INIMIGO</div>
+          <div id="barra-vida">
+            <div id="vida-atual"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function alternarMusica() {
+      const musica = document.getElementById("musica-fundo");
+      const botao = document.getElementById("controle-musica");
+      if (musica.paused) {
+        musica.play();
+        botao.textContent = "Música: ON";
+      } else {
+        musica.pause();
+        botao.textContent = "Música: OFF";
+      }
+    }
+    
+    // Autoplay após primeira interação
+    document.addEventListener('click', function initAudio() {
+      const musica = document.getElementById("musica-fundo");
+      musica.volume = 0.5;
+      musica.play().catch(e => console.log("Autoplay bloqueado:", e));
+      document.removeEventListener('click', initAudio);
+    }, { once: true });
+  </script>
+  
+  <script src="engine.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

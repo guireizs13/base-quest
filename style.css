@@ -1,0 +1,552 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+
+
+
+#inicio, #jogo {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  transition: transform 0.8s ease-in-out, opacity 0.5s ease;
+}
+
+
+#jogo {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+
+#inicio.exit {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+#jogo.enter {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'JetBrains Mono', monospace;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    color: #00ffcc;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    padding: 20px;
+    line-height: 1.6;
+    transition: background 1s ease;
+}
+
+/* Partículas */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #00ffcc;
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.3;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+    50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+}
+
+/* Container */
+.container {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Tela de Início */
+#inicio {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background:
+        radial-gradient(circle at center, #001122 0%, #000 70%),
+        repeating-linear-gradient(0deg,
+        rgba(0, 255, 204, 0.1) 0px,
+        rgba(0, 255, 204, 0.1) 1px,
+        transparent 1px,
+        transparent 20px);
+    animation: scanlines 1s infinite linear;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes scanlines {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 20px; }
+}
+
+.pixel-logo {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #00ffcc;
+    text-shadow:
+        0 0 10px #00ffcc,
+        0 0 20px #00ffcc,
+        3px 3px 0 #ff0066,
+        6px 6px 0 #ffaa00;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    animation: glitch 3s infinite;
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translateX(0); }
+    5% { transform: translateX(-2px); }
+    10% { transform: translateX(2px); }
+    15% { transform: translateX(-1px); }
+    20% { transform: translateX(1px); }
+    25% { transform: translateX(0); }
+}
+
+.pixel-subtitle {
+    font-size: 1.5rem;
+    color: #00ffcc;
+    margin-bottom: 3rem;
+    opacity: 0.8;
+}
+
+#menu-inicial {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 2rem;
+}
+
+.btn-pixel {
+    position: relative;
+    background: #005f5f;
+    border: 2px solid #00ffcc;
+    color: #00ffcc;
+    padding: 12px 24px;
+    margin: 10px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 0 #003f3f;
+    transition: all 0.1s;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-pixel:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #003f3f;
+}
+
+#dica-inicio {
+    position: absolute;
+    bottom: 50px;
+    animation: pulsate 2s infinite;
+    opacity: 0.7;
+    font-size: 1.1rem;
+}
+
+@keyframes pulsate {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* Jogo */
+#jogo {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    padding: 30px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+#texto {
+    background: rgba(26, 26, 46, 0.6);
+    border-left: 4px solid #00ffcc;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    white-space: pre-line;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+    min-height: 200px;
+}
+
+#entrada {
+    margin-bottom: 25px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#resposta {
+    flex: 1;
+    min-width: 300px;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    background: rgba(26, 26, 46, 0.8);
+    border: 2px solid #00ffcc;
+    border-radius: 8px;
+    color: #00ffcc;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#resposta:focus {
+    border-color: #ff6699;
+    box-shadow: 0 0 10px rgba(255, 102, 153, 0.3);
+}
+
+#resposta::placeholder {
+    color: rgba(0, 255, 204, 0.5);
+}
+
+#opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+#opcoes button {
+    background: linear-gradient(45deg, rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.8));
+    border: 2px solid rgba(0, 255, 204, 0.5);
+    color: #00ffcc;
+    padding: 20px;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+}
+
+#opcoes button:hover {
+    border-color: #ff6699;
+    background: linear-gradient(45deg, rgba(255, 102, 153, 0.1), rgba(0, 255, 204, 0.1));
+    transform: translateX(10px);
+    box-shadow: 0 5px 20px rgba(255, 102, 153, 0.2);
+}
+
+/* HUD */
+#hud {
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.9));
+    border: 2px solid #ff6699;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 25px;
+    box-shadow: 0 10px 30px rgba(255, 102, 153, 0.2);
+}
+
+#vidas-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.vida-icon {
+    width: 25px;
+    height: 25px;
+    background: #ff3366;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    box-shadow: 0 0 8px #ff0066;
+}
+
+#inimigo-visual {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px currentColor;
+}
+
+#inimigo-visual::before, #inimigo-visual::after {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    top: 30px;
+    border-radius: 50%;
+}
+
+#inimigo-visual::before { left: 25px; }
+#inimigo-visual::after { right: 25px; }
+
+.entrada-inimigo {
+    animation: entradaInimigo 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes entradaInimigo {
+    0% { transform: scale(0.2); opacity: 0; filter: blur(20px); }
+    70% { transform: scale(1.1); filter: blur(5px); }
+    100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+
+.saida-inimigo {
+    animation: saidaInimigo 0.8s forwards;
+}
+
+@keyframes saidaInimigo {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; filter: hue-rotate(90deg) blur(10px); }
+}
+
+#nome-inimigo {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #ff6699;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#barra-vida {
+    width: 100%;
+    height: 25px;
+    background: rgba(51, 51, 51, 0.8);
+    border: 2px solid #00ffcc;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+#vida-atual {
+    height: 100%;
+    background: linear-gradient(45deg, #00ffcc, #00aa99);
+    width: 100%;
+    transition: width 0.5s ease-out;
+    border-radius: 10px;
+    position: relative;
+}
+
+#vida-atual::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: health-glow 2s ease-in-out infinite;
+}
+
+@keyframes health-glow {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Conquistas */
+.conquista {
+    background: linear-gradient(45deg, #ffaa00, #ff8800);
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    box-shadow: 0 0 20px rgba(255, 170, 0, 0.5);
+}
+
+.conquista-badge {
+    font-size: 2rem;
+    float: left;
+    margin-right: 15px;
+    text-shadow: 0 0 10px #fff;
+}
+
+.conquista-texto {
+    overflow: hidden;
+}
+
+/* Utilitários */
+.hidden {
+    display: none;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.typing::after {
+    content: '▋';
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Temporizador */
+#temporizador {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #00ffcc;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    #jogo {
+        padding: 20px;
+    }
+    
+    #entrada {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    #resposta {
+        min-width: unset;
+    }
+    
+    .pixel-logo {
+        font-size: 2.5rem;
+    }
+    
+    #controle-musica {
+        top: 15px;
+        right: 15px;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+audio {
+    display: none;
+}
+
+.btn-pequeno {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+#entrada .btn-pixel {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.btn-dica {
+    background: linear-gradient(45deg, #331a4d, #551a8b);
+    border: 2px solid #aa00ff;
+    color: #ffffff;
+    box-shadow: 0 0 10px #aa00ff;
+}
+
+#controle-musica {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 20;
+}
+
+
+#hud {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.9));
+    border: 2px solid #ff6699;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 25px;
+    box-shadow: 0 10px 30px rgba(255, 102, 153, 0.2);
+}
+
+#hud-jogador, #hud-inimigo {
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+#hud-jogador {
+    border: 2px solid #00ffcc;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+}
+
+#hud-inimigo {
+    border: 2px solid #ff3366;
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
+}
+
+.hud-titulo {
+    font-weight: bold;
+    color: #ffcc00;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+#vidas-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 0;
+}
+
+
+#hud-inimigo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#inimigo-visual {
+    margin-bottom: 15px;
+}
+
+#barra-vida {
+    width: 80%;
+    margin-top: 10px;
+}
+/* este seletor é mais específico que apenas "#hud", então vence a regra anterior */
+#hud.hidden {
+  display: none;
+}
